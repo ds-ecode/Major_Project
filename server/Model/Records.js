@@ -31,6 +31,11 @@ const medicalSchema = new mongoose.Schema(
       minlength: 10,
       maxlength: 500,
     },
+    Status: {
+      type: String,
+      required: true,
+      default: "Pending",
+    },
   },
   {
     timestamps: true,
