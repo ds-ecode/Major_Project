@@ -1,5 +1,6 @@
 import { FileText} from 'lucide-react';
 import { useUser } from '../context/UserContext';
+import HealthRecords from './HealthRecords';
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -22,7 +23,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center">
             <FileText className="h-10 w-10 text-purple-600" />
@@ -35,7 +36,7 @@ const Dashboard = () => {
       </div>
 
       {/* Appointments and Records */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
  
 
         {/* Recent Health Records */}
@@ -44,25 +45,30 @@ const Dashboard = () => {
           <div className="space-y-4">
             {recentRecords.map((record) => (
               <div key={record.id} className="flex items-start p-4 border rounded-lg">
-                <FileText className="h-5 w-5 text-purple-600 mt-1" />
-                <div className="ml-4">
-                  <p className="font-semibold text-gray-800">{record.type}</p>
-                  <p className="text-sm text-gray-600">Date: {record.date}</p>
-                  <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                    record.status === 'Completed' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {record.status}
-                  </span>
-                </div>
+          <FileText className="h-5 w-5 text-purple-600 mt-1" />
+          <div className="ml-4">
+            <p className="font-semibold text-gray-800">{record.type}</p>
+            <p className="text-sm text-gray-600">Date: {record.date}</p>
+            <span className={`inline-block px-2 py-1 text-xs rounded-full ${
+              record.status === 'Completed' 
+                ? 'bg-green-100 text-green-800' 
+                : 'bg-yellow-100 text-yellow-800'
+            }`}>
+              {record.status}
+            </span>
+          </div>
               </div>
             ))}
           </div>
+        </div>
+        <div className="bg-white rounded-lg max-w shadow-sm p-6">
+          <HealthRecords/>
         </div>
       </div>
     </div>
   );
 };
+
+
 
 export default Dashboard;
