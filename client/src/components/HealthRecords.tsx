@@ -29,57 +29,9 @@ const HealthRecords = () => {
     }
   ];
 
-  const vitals = {
-    bloodPressure: "120/80",
-    heartRate: "72 bpm",
-    temperature: "98.6°F",
-    weight: "150 lbs",
-    height: "5'10\""
-  };
-
   return (
     <div className="space-y-6">
       {/* Vitals Section */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Latest Vitals</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <div className="flex items-center">
-              <Activity className="h-5 w-5 text-blue-600" />
-              <span className="ml-2 text-sm text-gray-600">Blood Pressure</span>
-            </div>
-            <p className="mt-2 text-lg font-semibold text-gray-800">{vitals.bloodPressure}</p>
-          </div>
-          <div className="p-4 bg-red-50 rounded-lg">
-            <div className="flex items-center">
-              <Heart className="h-5 w-5 text-red-600" />
-              <span className="ml-2 text-sm text-gray-600">Heart Rate</span>
-            </div>
-            <p className="mt-2 text-lg font-semibold text-gray-800">{vitals.heartRate}</p>
-          </div>
-          <div className="p-4 bg-yellow-50 rounded-lg">
-            <div className="flex items-center">
-              <Activity className="h-5 w-5 text-yellow-600" />
-              <span className="ml-2 text-sm text-gray-600">Temperature</span>
-            </div>
-            <p className="mt-2 text-lg font-semibold text-gray-800">{vitals.temperature}</p>
-          </div>
-          <div className="p-4 bg-green-50 rounded-lg">
-            <div className="flex items-center">
-              <Activity className="h-5 w-5 text-green-600" />
-              <span className="ml-2 text-sm text-gray-600">Weight</span>
-            </div>
-            <p className="mt-2 text-lg font-semibold text-gray-800">{vitals.weight}</p>
-          </div>
-          <div className="p-4 bg-purple-50 rounded-lg">
-            <div className="flex items-center">
-              <Activity className="h-5 w-5 text-purple-600" />
-              <span className="ml-2 text-sm text-gray-600">Height</span>
-            </div>
-            <p className="mt-2 text-lg font-semibold text-gray-800">{vitals.height}</p>
-          </div>
-        </div>
-      </div>
 
       {/* Records Table */}
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">

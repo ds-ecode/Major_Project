@@ -9,7 +9,6 @@ const Navbar = () => {
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: Heart },
-    { name: 'Appointments', href: '/appointments', icon: Calendar },
     { name: 'Health Records', href: '/health-records', icon: FileText },
     { name: 'Profile', href: '/profile', icon: User },
   ];
