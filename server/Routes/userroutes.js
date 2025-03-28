@@ -4,7 +4,7 @@ const router = express.Router();
 
 // User authentication routes
 router
-    .post('/users', userController.createUser)
+    .post('/register', userController.createUser)
     .get('/users', userController.getAllUsers)
     .get('/users/:id', userController.getUserById)
     .put('/users/:id', userController.updateUser)

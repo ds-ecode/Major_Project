@@ -1,173 +1,175 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { User, Mail, Lock, UserCog } from "lucide-react";
 
-interface RegisterFormData {
-  email: string;
-  password: string;
-  role: string;
-  name: string;
+interface RegisterFormProps {
+  onSubmit: (data: { [key: string]: string }) => void;
 }
 
-const Register: React.FC = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<RegisterFormData>({
+export default function Register({ onSubmit }: RegisterFormProps) {
+  const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     role: "",
-    name: "",
   });
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
-    // Validation
-    if (
-      !formData.email ||
-      !formData.password ||
-      !formData.role ||
-      !formData.name
-    ) {
-      setError("All fields are required");
-      return;
-    }
+    const newErrors = {
+      name: formData.name ? "" : "Name is required",
+      email: formData.email ? "" : "Email is required",
+      password: formData.password ? "" : "Password is required",
+      role: formData.role ? "" : "Role is required",
+    };
 
-    setIsLoading(true);
+    setErrors(newErrors);
 
-    try {
-      // Replace with your actual API call
-      // const response = await registerUser(formData);
+    const hasErrors = Object.values(newErrors).some((error) => error !== "");
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Redirect to login page after successful registration
-      navigate("/login");
-    } catch (err) {
-      setError("Registration failed. Please try again.");
-      console.error(err);
-    } finally {
-      setIsLoading(false);
+    if (!hasErrors) {
+      try {
+        const response = await axios.post(
+          "http://localhost:9090/api/v1/register",
+          formData,
+        );
+        onSubmit(response.data);
+        alert("User registered successfully");
+      } catch (error) {
+        console.error("Error registering user:", error);
+        alert("Error registering user");
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
-          </h2>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-lg shadow-lg p-8 mb-6"
+    >
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        Create an Account
+      </h2>
+
+      <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-2">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <User className="w-4 h-4 mr-2 text-blue-500" />
+            Full Name
+          </label>
+          <input
+            type="text"
+            placeholder="Enter your full name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white hover:bg-gray-100 transition-colors duration-200"
+          />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
 
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {error}
-          </div>
-        )}
+        <div className="space-y-2">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <Mail className="w-4 h-4 mr-2 text-blue-500" />
+            Email Address
+          </label>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white hover:bg-gray-100 transition-colors duration-200"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+        </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="userrole" className="sr-only">
-                user role
-              </label>
-              <input
-                id="userrole"
-                name="userrole"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="User Role"
-                value={formData.role}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+        <div className="space-y-2">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <Lock className="w-4 h-4 mr-2 text-blue-500" />
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Create a password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white hover:bg-gray-100 transition-colors duration-200"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password}</p>
+          )}
+        </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              {isLoading ? "Registering..." : "Register"}
-            </button>
+        <div className="space-y-2">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <UserCog className="w-4 h-4 mr-2 text-blue-500" />
+            Role
+          </label>
+          <div className="flex space-x-6 mt-2">
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="doctor"
+                name="role"
+                value="doctor"
+                checked={formData.role === "doctor"}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+              />
+              <label htmlFor="doctor" className="ml-2 text-sm text-gray-700">
+                Doctor
+              </label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="patient"
+                name="role"
+                value="patient"
+                checked={formData.role === "patient"}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+              />
+              <label htmlFor="patient" className="ml-2 text-sm text-gray-700">
+                Patient
+              </label>
+            </div>
           </div>
-
-          <div className="text-sm text-center">
-            <p>
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Sign in
-              </Link>
-            </p>
-          </div>
-        </form>
+          {errors.role && <p className="text-red-500 text-sm">{errors.role}</p>}
+        </div>
       </div>
-    </div>
-  );
-};
 
-export default Register;
+      <button
+        type="submit"
+        className="mt-6 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-purple-700 active:from-blue-700 active:to-purple-800 transition-colors duration-200 flex items-center justify-center"
+      >
+        <User className="w-4 h-4 mr-2" />
+        Register
+      </button>
+
+      <div className="mt-4 text-center text-sm text-gray-600">
+        Already have an account?{" "}
+        <a href="/login" className="text-blue-500 hover:underline">
+          Log in
+        </a>
+      </div>
+    </form>
+  );
+}

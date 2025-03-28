@@ -18,7 +18,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/health-records" element={<HealthRecords />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/register" element={<Register onSubmit={(data) => console.log('Register form submitted:', data)} />} />
               <Route path="/login" element={<Login />} />
             </Routes>
           </main>
