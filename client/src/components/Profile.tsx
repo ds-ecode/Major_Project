@@ -19,12 +19,6 @@ const Profile = () => {
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-800">Personal Information</h2>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              {isEditing ? 'Cancel' : 'Edit Profile'}
-            </button>
           </div>
 
           {isEditing ? (

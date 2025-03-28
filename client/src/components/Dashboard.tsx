@@ -1,14 +1,8 @@
-import React from 'react';
-import { Activity, Calendar, FileText, Bell, Clock } from 'lucide-react';
+import { FileText} from 'lucide-react';
 import { useUser } from '../context/UserContext';
 
 const Dashboard = () => {
   const { user } = useUser();
-
-  const upcomingAppointments = [
-    { id: 1, doctor: "Dr. Sarah Wilson", specialty: "Cardiology", date: "2024-03-20", time: "10:00 AM" },
-    { id: 2, doctor: "Dr. Michael Chen", specialty: "General Medicine", date: "2024-03-25", time: "2:30 PM" },
-  ];
 
   const recentRecords = [
     { id: 1, type: "Blood Test", date: "2024-03-01", status: "Completed" },
