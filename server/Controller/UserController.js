@@ -6,7 +6,7 @@ const userController = {
   // Create a new user
   createUser: async (req, res) => {
     try {
-      const { name, role, email, address, telephone, password } = req.body;
+      const { name, role, email, password } = req.body;
 
       // Check if user already exists
       const existingUser = await User.findOne({ email });
@@ -30,8 +30,6 @@ const userController = {
         name,
         role,
         email,
-        address,
-        telephone,
         password: hashedPassword
       });
 

@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heart, Calendar, FileText, User, Menu, X } from 'lucide-react';
+import { Heart, FileText, User,Book, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -11,6 +10,8 @@ const Navbar = () => {
     { name: 'Dashboard', href: '/', icon: Heart },
     { name: 'Health Records', href: '/health-records', icon: FileText },
     { name: 'Profile', href: '/profile', icon: User },
+    { name: 'login', href: '/login', icon: User },
+    { name: 'register', href: '/register', icon: Book },
   ];
 
   return (

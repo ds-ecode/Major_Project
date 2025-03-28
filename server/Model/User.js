@@ -29,12 +29,12 @@ const userSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: [true, "Address is required"],
+      required: [false, "Address is required"],
       trim: true,
     },
     telephone: {
       type: String,
-      required: [true, "Telephone number is required"],
+      required: [false, "Telephone number is required"],
       match: [/^[0-9]{10}$/, "Please enter a valid 10-digit telephone number"],
     },
     password: {
